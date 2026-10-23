@@ -1,0 +1,112 @@
+Filetype: IR signals file
+Version: 1
+#
+# Dynaudio Xeo 2 - generated from the manufacturer's published code table.
+# Source: https://dynaudio.com/faq/where-do-i-find-the-hex-codes-for-the-xeo-remote-control
+# Encoding follows Flipper-IRDB _Converted_/IR_Plus/D/DYNAUDIO/Xeo5.ir.
+# NECext address bytes FF 00; command bytes reverse8(code XOR FF), reverse8(code).
+# Shared buttons match the existing Xeo5 profile; Xeo 2-only buttons are untested.
+# A/B/C and Status LED are parenthesized in the manufacturer's Xeo 2 table.
+# No physical phone/speaker verification has been performed.
+#
+name: Power On
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: FF 00 00 00
+#
+name: Power Off
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: D7 28 00 00
+#
+name: Volume Down
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: DF 20 00 00
+#
+name: Volume Up
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 9F 60 00 00
+#
+name: Mute
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 97 68 00 00
+#
+name: Input 1 - Line
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 67 98 00 00
+#
+name: Input 2 - Optical
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 17 E8 00 00
+#
+name: Input 3 - Aux
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: E7 18 00 00
+#
+name: Input 4 - Bluetooth
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 47 B8 00 00
+#
+name: A
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: F7 08 00 00
+#
+name: B
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 77 88 00 00
+#
+name: C
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: B7 48 00 00
+#
+name: Status LED On-Off
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: FD 02 00 00
+#
+name: Bluetooth Pairing
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: FB 04 00 00
+#
+name: Bluetooth Play-Pause
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 27 D8 00 00
+#
+name: Bluetooth Previous Track
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: 07 F8 00 00
+#
+name: Bluetooth Next Track
+type: parsed
+protocol: NECext
+address: FF 00 00 00
+command: C7 38 00 00
