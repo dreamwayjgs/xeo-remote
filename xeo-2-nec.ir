@@ -1,0 +1,113 @@
+Filetype: IR signals file
+Version: 1
+#
+# Dynaudio Xeo 2 - experimental parsed NEC alternative, not canonical.
+# Official codes: https://dynaudio.com/faq/where-do-i-find-the-hex-codes-for-the-xeo-remote-control
+# Standard NEC uses logical address 00 and the official command byte.
+# Address/command inverses and LSB-first wire order are encoder-generated.
+# Volume Down command 04 should encode to MSB-first payload 00FF20DF.
+# Physical operation and long-press behavior are NOT verified.
+# Carrier/timing/repeat generation is delegated to the importing application.
+# Use Dynaudio_Xeo_2.ir for the owner-confirmed RAW profile.
+#
+name: Power On
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 00 00 00 00
+#
+name: Power Off
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 14 00 00 00
+#
+name: Volume Down
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 04 00 00 00
+#
+name: Volume Up
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 06 00 00 00
+#
+name: Mute
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 16 00 00 00
+#
+name: Input 1 - Line
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 19 00 00 00
+#
+name: Input 2 - Optical
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 17 00 00 00
+#
+name: Input 3 - Aux
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 18 00 00 00
+#
+name: Input 4 - Bluetooth
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 1D 00 00 00
+#
+name: A
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 10 00 00 00
+#
+name: B
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 11 00 00 00
+#
+name: C
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 12 00 00 00
+#
+name: Status LED On-Off
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 40 00 00 00
+#
+name: Bluetooth Pairing
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 20 00 00 00
+#
+name: Bluetooth Play-Pause
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 1B 00 00 00
+#
+name: Bluetooth Previous Track
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 1F 00 00 00
+#
+name: Bluetooth Next Track
+type: parsed
+protocol: NEC
+address: 00 00 00 00
+command: 1C 00 00 00

@@ -1,44 +1,26 @@
 # Dynaudio Xeo 2
 
-IR Blaster Remote에서 가져올 수 있는 Flipper `.ir` 형식의 Dynaudio Xeo 2 프로파일입니다. 현재 테스트 대상은 `Xeo2-test.ir`입니다. 앱 개발이나 외부 수신기는 필요하지 않습니다.
+IR Blaster Remote에서 가져올 수 있는 Flipper `.ir` 형식의 Dynaudio Xeo 2 프로파일입니다. 앱 개발이나 외부 수신기는 필요하지 않습니다.
 
-> **현재 상태:** RAW 진단 B(`00FF20DF`, 38 kHz)로 Xeo 2 볼륨 낮추기가 실제 확인됐습니다. 같은 방식의 전체 후보 **`Xeo2-test.ir`**을 테스트 중입니다. 최초 `Dynaudio_Xeo_2.ir`은 작동하지 않았으므로 사용하지 마세요. 아직 전체 정본은 확정하지 않았습니다.
+## 파일과 확인된 동작
 
-## 전체 버튼 테스트 — Xeo2-test
+- **`Dynaudio_Xeo_2.ir` — RAW 정본.** 테스트 파일에서 신호를 바꾸지 않고 승격했습니다. POCO X7 Pro와 IR Blaster Remote에서 **전원 켜기·끄기, 볼륨 올리기·내리기**를 사용자가 확인했습니다.
+- **`xeo-2-nec.ir` — NEC 형식의 미검증 대안.** 같은 17개 명령을 주소·명령으로 저장하고, 파형 생성은 앱에 맡깁니다. 별도 리모컨으로 가져와 RAW와 비교하세요. 먼저 Volume Down을 짧게 확인합니다.
+- 실패한 최초 프로파일 내용과 진단·테스트 파일은 현재 목록에서 정리했습니다. 과거 내용은 Git 이력에 남아 있습니다.
 
-앱의 GitHub 불러오기에 `https://github.com/dreamwayjgs/xeo-remote`를 입력하고 **`Xeo2-test.ir`**을 별도 리모컨으로 가져옵니다. RAW 버튼은 총 17개입니다. 송신기는 Internal / 내장 IR로 선택합니다.
+두 파일 모두 17개 버튼입니다. **그 외 버튼, Bluetooth 기능과 길게 누르기·반복 동작은 아직 검증하지 않았습니다.** Bluetooth 재생/트랙은 연결·재생 상태가 필요하고 Pairing은 연결 상태를 바꿀 수 있습니다. A/B/C와 Status LED는 공식 표에도 괄호로 표시돼 있으며, 사용 조건과 동작을 보장하지 않습니다.
 
-- Volume Down은 실제 작동한 진단 B와 동일한 파형입니다. 먼저 이 버튼으로 확인합니다.
-- 이후 낮은 음량에서 Volume Up, Mute, Power Off/On, 사용 중인 입력을 한 번씩 짧게 확인합니다. 다른 기능이 실행되면 해당 버튼과 반응을 기록합니다.
-- Bluetooth 재생/트랙은 Bluetooth 연결·재생 상태에서 확인합니다. Pairing은 연결 상태를 바꿀 수 있으므로 필요한 경우에만 테스트합니다.
-- A/B/C와 Status LED는 공식 표에도 괄호로 표시돼 있습니다. 사용 조건이 확인되지 않은 기능을 작동 보장으로 표시하지 않습니다.
-- 이 파일은 탭당 초기 프레임 하나입니다. 볼륨 길게 누르기는 앱의 반복 송신 동작까지 별도로 확인해야 합니다. 파일 자체에는 반복 프레임을 넣지 않았습니다.
+## RAW와 NEC의 차이
 
-**정본 승격:** 실제 사용하는 버튼들이 기대한 대로 작동하는지 소유자가 확인한 뒤, 이 RAW 파일을 `Dynaudio_Xeo_2.ir`의 정본으로 교체하고 테스트 이름을 정리합니다. 미확인 기능과 길게 누르기 지원 여부는 그대로 명시합니다. 이전 실패 파일은 Git 이력에 남습니다. 검증 전에는 자동 승격하지 않습니다.
+RAW는 38 kHz와 켜짐·꺼짐 시간을 직접 저장합니다. 정본은 탭당 초기 프레임 하나이며, 명시적 반복 프레임은 없습니다. 길게 누를 때 앱이 반복하는지는 별도로 확인해야 합니다.
 
-## RAW 진단 — 최초 파일이 작동하지 않을 때
+NEC 파일은 `protocol: NEC`, 논리 주소 `00`, 공식 명령 바이트를 저장합니다. 예를 들어 Volume Down은 `command: 04 00 00 00`입니다. 인코더가 반전 바이트와 LSB-first 전송 순서를 생성하면, 실제 전송 비트열을 MSB-first로 적었을 때 `00FF20DF`가 됩니다. `NECext`로 바꾸거나 RAW용 변환값 `20`을 명령 필드에 직접 넣지 마세요.
 
-GitHub 불러오기에서 **`Dynaudio_Xeo_2_Diagnostic.ir`**을 선택해 별도 리모컨으로 가져옵니다. 버튼은 **A–E 총 5개**입니다. 기존 리모컨과 구별해서 선택하세요.
-
-1. 원본 리모컨으로 스피커를 켜고, 음량을 낮게 맞춥니다. 필요하면 낮은 음량으로 음악을 재생해 반응을 확인합니다.
-2. 앱에서 **Internal / 내장 IR**을 선택하고, 폰 상단을 원본 리모컨이 작동하는 스피커 수신부로 향하게 합니다.
-3. **A부터 한 번씩 짧게** 눌러봅니다. 버튼 사이에 2초 정도 기다립니다. 길게 누르지 마세요.
-4. 볼륨이 내려가거나 LED 등 다른 반응이 생기면 멈추고 **버튼 문자와 실제 반응**을 알려주세요. 후보 신호가 다른 기능으로 해석될 수도 있습니다.
-5. 전부 무반응이면 앱 버전, 송신 설정 화면, 원본 리모컨이 같은 위치에서 작동하는지도 함께 확인합니다.
-
-| 버튼 | 실제 전송 비트열의 16진수 표현 (MSB-first) | 비교 목적 |
-| --- | --- | --- |
-| A | `00FF04FB` | 공식 코드의 직접 표현 후보 |
-| B | `00FF20DF` | 명령 바이트의 비트 순서 반전 후보 |
-| C | `FF0004FB` | 주소 바이트 순서 변경 후보 |
-| D | `FF0020DF` | 주소 및 명령 비트 순서 변경 후보 |
-| E | `FF00FB04` | 최초 파일을 앱 최신 소스가 해석한 페이로드 비교군 |
-
-모두 NEC 형태의 38 kHz RAW 파형으로, 앱의 NEC/NECext 코드 변환을 우회합니다. 탭당 초기 프레임 하나만 보냅니다. 주파수는 실제 측정값이 아니고, 길게 누르기·반복 동작도 검증하지 않습니다. 이 다섯 후보가 모든 가능한 신호를 포괄하지는 않습니다.
+검토한 앱 최신 소스는 이 NEC 파일을 정본과 같은 32비트 페이로드로 해석합니다. 다만 앱 NEC 인코더의 기본 주파수는 38,222 Hz, 기본 mark 길이는 562μs로 RAW의 38,000 Hz·560μs와 조금 다릅니다. **비트값이 같다는 검증이지 파형 전체나 실기기 동작이 같다는 보장은 아닙니다.** 설치 버전에 따라 해석도 달라질 수 있습니다.
 
 ## 가져오기
 
-1. [Xeo2-test.ir 다운로드](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/Xeo2-test.ir)를 길게 눌러 파일을 폰의 Download 폴더에 저장합니다. 확장자는 `.ir`로 유지합니다.
+1. [RAW 정본 다운로드](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/Dynaudio_Xeo_2.ir)를 길게 눌러 파일을 폰의 Download 폴더에 저장합니다. 확장자는 `.ir`로 유지합니다. [NEC 테스트 파일](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/xeo-2-nec.ir)은 별도로 가져옵니다.
 2. IR Blaster Remote에서 **Settings > Backup > Import backup** 또는 파일 가져오기 메뉴를 엽니다. 설치 버전에 따라 메뉴 이름이 다를 수 있습니다.
 3. 파일을 선택하고 가져오기 미리보기에 **17개 버튼**이 나오는지 확인합니다.
 4. IR 송신기를 **Internal / 내장 IR**로 선택합니다.
@@ -48,7 +30,7 @@ GitHub 불러오기에서 **`Dynaudio_Xeo_2_Diagnostic.ir`**을 선택해 별도
 
 ## GitHub에서 가져오기
 
-앱의 GitHub 불러오기/GitHub Store에서 아래 저장소 주소를 입력하고 `Xeo2-test.ir`을 선택합니다.
+앱의 GitHub 불러오기/GitHub Store에서 아래 저장소 주소를 입력하고 **`Dynaudio_Xeo_2.ir`**을 선택합니다. NEC를 비교하려면 **`xeo-2-nec.ir`**을 별도 리모컨으로 가져옵니다.
 
 ```text
 https://github.com/dreamwayjgs/xeo-remote
@@ -59,8 +41,8 @@ https://github.com/dreamwayjgs/xeo-remote
 ## 출처와 검증 범위
 
 - 공식 코드: https://dynaudio.com/faq/where-do-i-find-the-hex-codes-for-the-xeo-remote-control
-- 바이트 표현 참고: https://github.com/Lucaslhm/Flipper-IRDB/blob/main/_Converted_/IR_Plus/D/DYNAUDIO/Xeo5.ir
-- 앱 소스의 Flipper 가져오기는 `NECext` 형식을 지원합니다. 설치된 스토어 버전과 최신 소스는 다를 수 있습니다.
+- 앱의 NEC 가져오기 변환: https://github.com/iodn/android-ir-blaster/blob/master/lib/utils/remotes_io.dart (`_convertToLircHex`, `completeNecInverses`)
+- 앱의 NEC 파형 생성: https://github.com/iodn/android-ir-blaster/blob/master/lib/ir/protocols/nec.dart
 - Xeo 2 열의 코드만 사용했습니다. Hub/Connect용 다른 모델의 입력 코드는 포함하지 않았습니다.
 - 공식 표가 괄호로 표시한 A/B/C 및 Status LED도 포함했습니다. 이 표기만으로 사용 조건이나 모든 기능의 동작을 보장하지 않습니다.
-- 기존 Xeo 5 파일과 공통 버튼의 바이트를 맞췄습니다. 실제 폰 송신·스피커 반응은 아직 검증하지 않았습니다.
+- 최초 파일은 자동 변환된 Xeo 5 프로파일의 잘못된 주소·명령 표현을 따랐습니다. 정본은 실제 작동한 RAW 진단 신호를 기준으로 수정했습니다.
