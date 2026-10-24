@@ -38,6 +38,22 @@ https://github.com/dreamwayjgs/xeo-remote
 
 미리보기에 17개 버튼이 나오는지 확인한 뒤 가져옵니다. 위 파일 다운로드 방식으로도 사용할 수 있습니다.
 
+## 표에서 프로파일 재생성
+
+외부 패키지 없이 Node.js로 실행합니다. 저장소 루트에서:
+
+```text
+node generate.mjs --check
+node generate.mjs
+```
+
+- `--check`: 파일을 쓰지 않고 두 프로파일이 생성 결과와 일치하는지 확인합니다. LF/CRLF 차이는 무시합니다.
+- 옵션 없이 실행: `Dynaudio_Xeo_2.ir`과 `xeo-2-nec.ir`을 생성하거나 덮어씁니다. 어느 폴더에서 실행해도 출력은 스크립트가 있는 폴더입니다.
+- 공식 Xeo 2 코드 표는 `generate.mjs`의 `commands`에 있습니다. 수정할 때는 생성된 `.ir` 대신 이 표를 고친 뒤 재생성합니다.
+- NEC는 논리 주소 `00`과 공식 명령을 그대로 저장합니다. RAW는 주소·반전값과 명령·반전값을 LSB-first로 전송하는 NEC 파형으로 변환합니다.
+- 두 모드 모두 17개 명령의 비트열·프레임 구조·길이를 검사하고, 실제 작동한 볼륨− 파형과 정확히 일치하는지 확인합니다. 파일 일치는 수동 편집도 감지하지만, 원격 기기 동작을 대신 검증하지는 않습니다.
+- 현재 확인 결과와 파일 헤더도 스크립트에 포함돼 있습니다. 이후 Bluetooth 등을 확인하면 README와 스크립트의 확인 범위를 함께 갱신하고 재생성합니다.
+
 ## 출처와 검증 범위
 
 - 공식 코드: https://dynaudio.com/faq/where-do-i-find-the-hex-codes-for-the-xeo-remote-control
