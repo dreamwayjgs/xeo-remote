@@ -1,12 +1,13 @@
 Filetype: IR signals file
 Version: 1
 #
-# Dynaudio Xeo 2 - experimental parsed NEC alternative, not canonical.
+# Dynaudio Xeo 2 - parsed NEC alternative; RAW remains canonical.
 # Official codes: https://dynaudio.com/faq/where-do-i-find-the-hex-codes-for-the-xeo-remote-control
 # Standard NEC uses logical address 00 and the official command byte.
 # Address/command inverses and LSB-first wire order are encoder-generated.
 # Volume Down command 04 should encode to MSB-first payload 00FF20DF.
-# Physical operation and long-press behavior are NOT verified.
+# Owner report 2026-10-24: non-Bluetooth buttons work on POCO X7 Pro / Xeo 2.
+# Bluetooth functions and long-press/repeat behavior remain unverified.
 # Carrier/timing/repeat generation is delegated to the importing application.
 # Use Dynaudio_Xeo_2.ir for the owner-confirmed RAW profile.
 #

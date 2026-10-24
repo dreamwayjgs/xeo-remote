@@ -5,10 +5,10 @@ IR Blaster Remote에서 가져올 수 있는 Flipper `.ir` 형식의 Dynaudio Xe
 ## 파일과 확인된 동작
 
 - **`Dynaudio_Xeo_2.ir` — RAW 정본.** 테스트 파일에서 신호를 바꾸지 않고 승격했습니다. POCO X7 Pro와 IR Blaster Remote에서 **전원 켜기·끄기, 볼륨 올리기·내리기**를 사용자가 확인했습니다.
-- **`xeo-2-nec.ir` — NEC 형식의 미검증 대안.** 같은 17개 명령을 주소·명령으로 저장하고, 파형 생성은 앱에 맡깁니다. 별도 리모컨으로 가져와 RAW와 비교하세요. 먼저 Volume Down을 짧게 확인합니다.
+- **`xeo-2-nec.ir` — NEC 형식의 대안.** 같은 17개 명령을 주소·명령으로 저장하고, 파형 생성은 앱에 맡깁니다. **2026-10-24 사용자 보고: POCO X7 Pro와 IR Blaster Remote에서 Bluetooth를 제외한 버튼들이 정상 작동했습니다.** RAW 정본은 유지합니다.
 - 실패한 최초 프로파일 내용과 진단·테스트 파일은 현재 목록에서 정리했습니다. 과거 내용은 Git 이력에 남아 있습니다.
 
-두 파일 모두 17개 버튼입니다. **그 외 버튼, Bluetooth 기능과 길게 누르기·반복 동작은 아직 검증하지 않았습니다.** Bluetooth 재생/트랙은 연결·재생 상태가 필요하고 Pairing은 연결 상태를 바꿀 수 있습니다. A/B/C와 Status LED는 공식 표에도 괄호로 표시돼 있으며, 사용 조건과 동작을 보장하지 않습니다.
+두 파일 모두 17개 버튼입니다. **Bluetooth 기능과 길게 누르기·반복 동작은 아직 검증하지 않았습니다.** Bluetooth는 실패 판정이 아니라 미검증입니다. 재생/트랙은 연결·재생 상태가 필요하고 Pairing은 연결 상태를 바꿀 수 있습니다. A/B/C와 Status LED는 공식 표에도 괄호로 표시돼 있으며, 사용자 환경 밖의 모든 구성에서 동작을 보장하지 않습니다.
 
 ## RAW와 NEC의 차이
 
@@ -16,11 +16,11 @@ RAW는 38 kHz와 켜짐·꺼짐 시간을 직접 저장합니다. 정본은 탭�
 
 NEC 파일은 `protocol: NEC`, 논리 주소 `00`, 공식 명령 바이트를 저장합니다. 예를 들어 Volume Down은 `command: 04 00 00 00`입니다. 인코더가 반전 바이트와 LSB-first 전송 순서를 생성하면, 실제 전송 비트열을 MSB-first로 적었을 때 `00FF20DF`가 됩니다. `NECext`로 바꾸거나 RAW용 변환값 `20`을 명령 필드에 직접 넣지 마세요.
 
-검토한 앱 최신 소스는 이 NEC 파일을 정본과 같은 32비트 페이로드로 해석합니다. 다만 앱 NEC 인코더의 기본 주파수는 38,222 Hz, 기본 mark 길이는 562μs로 RAW의 38,000 Hz·560μs와 조금 다릅니다. **비트값이 같다는 검증이지 파형 전체나 실기기 동작이 같다는 보장은 아닙니다.** 설치 버전에 따라 해석도 달라질 수 있습니다.
+검토한 앱 최신 소스는 이 NEC 파일을 정본과 같은 32비트 페이로드로 해석합니다. 다만 앱 NEC 인코더의 기본 주파수는 38,222 Hz, 기본 mark 길이는 562μs로 RAW의 38,000 Hz·560μs와 조금 다릅니다. 파형 전체가 동일한 것은 아닙니다. 사용자 환경에서는 위 범위의 NEC 동작도 확인됐지만, 다른 기기·앱 버전까지 보장하지 않습니다.
 
 ## 가져오기
 
-1. [RAW 정본 다운로드](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/Dynaudio_Xeo_2.ir)를 길게 눌러 파일을 폰의 Download 폴더에 저장합니다. 확장자는 `.ir`로 유지합니다. [NEC 테스트 파일](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/xeo-2-nec.ir)은 별도로 가져옵니다.
+1. [RAW 정본 다운로드](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/Dynaudio_Xeo_2.ir)를 길게 눌러 파일을 폰의 Download 폴더에 저장합니다. 확장자는 `.ir`로 유지합니다. [NEC 대안 파일](https://raw.githubusercontent.com/dreamwayjgs/xeo-remote/main/xeo-2-nec.ir)은 별도로 가져옵니다.
 2. IR Blaster Remote에서 **Settings > Backup > Import backup** 또는 파일 가져오기 메뉴를 엽니다. 설치 버전에 따라 메뉴 이름이 다를 수 있습니다.
 3. 파일을 선택하고 가져오기 미리보기에 **17개 버튼**이 나오는지 확인합니다.
 4. IR 송신기를 **Internal / 내장 IR**로 선택합니다.
